@@ -1,5 +1,5 @@
 // seed.js
-require("dotenv").config({ path: "../../.env" });
+require("dotenv").config();
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 const TwoWheeler = require("./twoWheeler");

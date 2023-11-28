@@ -8,11 +8,11 @@ const sequelize = require("./app/config/database");
 // Middleware and routes setup
 app.use(express.json());
 
-// Define and use your routes
+// API routes section
 const routes = require("./app/routes");
 app.use("/", routes);
 
-// Start the server
+// Start the server and database connection server.
 sequelize
   .sync()
   .then(() => {

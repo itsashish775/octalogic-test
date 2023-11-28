@@ -1,21 +1,37 @@
 const User = require("../models/User");
 
 const userController = {
+  // for listing al the user
   allUsers: async (req, res) => {
-    const users = await User.findAll();
-    console.log(users);
-    res.json(users);
+    try {
+      const users = await User.findAll();
+      console.log(users);
+      res
+        .status(200)
+        .json({ message: "All Registered User are here.", data: users });
+    } catch (error) {
+      res.status(400).json({
+        message: "Some Error came between the execution",
+        error: error,
+      });
+    }
   },
+
+  // for creating the user
   createUser: async (req, res) => {
-    const user = await User.create({
-      firstName: "Ashish",
-      lastName: "Sharma",
-      numberOfWheels: "2",
-      bookedVahicle: "asdf",
-      startDate: new Date("2023-11-07"),
-      endDate: new Date("2023-11-25"),
-    });
-    console.log("created SuccessFully", user);
+    try {
+      console.log(req.body);
+      const user = await User.create(req.body);
+      console.log("created SuccessFully", user);
+      res
+        .status(200)
+        .json({ message: "User Registered Successful.", data: user });
+    } catch (error) {
+      res.status(400).json({
+        message: "Some Error came between the execution",
+        error: error,
+      });
+    }
   },
 };
 module.exports = userController;
