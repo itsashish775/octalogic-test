@@ -1,9 +1,11 @@
 // seed.js
+// seeding file in for predata load to db
 require("dotenv").config();
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 const TwoWheeler = require("./twoWheeler");
 const FourWheeler = require("./fourWheeler");
+
 
 const seed = async () => {
   try {
