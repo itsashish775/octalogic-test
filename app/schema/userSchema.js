@@ -1,4 +1,5 @@
 const { body } = require("express-validator");
+// user schema defined which will be passed as schema for validation in the user Routes
 const schema = [
   body("firstName")
     .notEmpty()
