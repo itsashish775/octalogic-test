@@ -3,9 +3,9 @@
 require("dotenv").config();
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
-const TwoWheeler = require("./twoWheeler");
-const FourWheeler = require("./fourWheeler");
-
+const VehicleType = require("./VehicleTypes");
+const VehicleModels = require("./VehicleModels");
+const Vehicles = require("./Vehicles");
 
 const seed = async () => {
   try {
@@ -13,11 +13,33 @@ const seed = async () => {
     await sequelize.sync({ force: true });
 
     // Create sample users
-    await TwoWheeler.bulkCreate([{ name: "cruiser" }, { name: "sports" }]);
-    await FourWheeler.bulkCreate([
-      { name: "hatchback" },
-      { name: "suv" },
-      { name: "sedan" },
+    await VehicleType.bulkCreate([
+      { name: "2 Wheeler" },
+      { name: "4 Wheeler" },
+    ]);
+    await VehicleModels.bulkCreate([
+      { name: "cruiser", vehicleTypeId: "1" },
+      { name: "sports", vehicleTypeId: "1" },
+      { name: "hatchback", vehicleTypeId: "2" },
+      { name: "suv", vehicleTypeId: "2" },
+      { name: "sedan", vehicleTypeId: "2" },
+    ]);
+    await Vehicles.bulkCreate([
+      { vehicleName: "Retrospec Chatham", modelId: "1" },
+      { vehicleName: "Sixthreezero EVRYjourney", modelId: "1" },
+      { vehicleName: "Electra Loft 7D", modelId: "1" },
+      { vehicleName: "Yamaha YZF-R7", modelId: "2" },
+      { vehicleName: "Aprilia RS660", modelId: "2" },
+      { vehicleName: "Ducati Panigale V4S", modelId: "2" },
+      { vehicleName: "Honda Civic Type R", modelId: "3" },
+      { vehicleName: "Hyundai Elantra N", modelId: "3" },
+      { vehicleName: "Toyota GR Corolla", modelId: "3" },
+      { vehicleName: "Honda CR-V", modelId: "4" },
+      { vehicleName: "Ford Expedition", modelId: "4" },
+      { vehicleName: "Kia Telluride", modelId: "4" },
+      { vehicleName: "Honda Civic", modelId: "5" },
+      { vehicleName: "Hyundai Sonata", modelId: "5" },
+      { vehicleName: "Toyota Crown", modelId: "5" },
     ]);
 
     console.log("Seeding completed successfully.");
