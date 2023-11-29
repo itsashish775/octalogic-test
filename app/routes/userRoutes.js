@@ -15,6 +15,8 @@ router.post(
   userController.createUser
 );
 router.get("/twoWheelerList", staticDataController.twoWheelerList);
+// get Vehicle Types API for the FrontEnd User
+router.get("/vehicleTypes", staticDataController.getvehicleTypes);
 router.get("/fourWheelerList", staticDataController.fourWheelerList);
 
 module.exports = router;
