@@ -13,10 +13,13 @@ router.post(
   userSchema,
   userSchemaValidation,
   userController.createUser
-);
-router.get("/twoWheelerList", staticDataController.twoWheelerList);
+  );
+  
 // get Vehicle Types API for the FrontEnd User
 router.get("/vehicleTypes", staticDataController.getvehicleTypes);
-router.get("/fourWheelerList", staticDataController.fourWheelerList);
+router.get("/getVehicleModels/:vehicleTypeId", staticDataController.getVehicleModels);
+router.get("/getVehicles/:modelId", staticDataController.getVehicles);
+
+router.put("/returnBooking/:bookingId",staticDataController.returnBooking)
 
 module.exports = router;

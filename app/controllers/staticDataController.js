@@ -1,15 +1,22 @@
+const Booking = require("../models/Booking");
 const VehicleModels = require("../models/VehicleModels");
 const VehicleTypes = require("../models/VehicleTypes");
-const FourWheeler = require("../models/fourWheeler");
-const TwoWheeler = require("../models/twoWheeler");
+const Vehicles = require("../models/Vehicles");
 
 const staticDataController = {
-  // for listing all the two wheeler list.
-  twoWheelerList: async (req, res) => {
+  // api for the vehicle when a Model is selected if vehicle is available.
+  getVehicles: async (req, res) => {
     try {
-      const twoWheelers = await TwoWheeler.findAll();
-      console.log(JSON.stringify({ twoWheelers }, null, 2));
-      res.status(200).json({ message: "All Two Wheelers", data: twoWheelers });
+      console.log(req.params);
+      const vehicleTypes = await Vehicles.findAll({
+        where: {
+          modelId: req.params.modelId,
+          availabilityStatus: true,
+        },
+      });
+      res
+        .status(200)
+        .json({ message: "Vehicle Type Fetched", data: vehicleTypes });
     } catch (error) {
       res.status(400).json({
         message: "Some Error came between the execution",
@@ -18,7 +25,26 @@ const staticDataController = {
     }
   },
 
-  // for listing all the four wheeler list.
+  // api for the vehicle model when a vehicletype is selected.
+  getVehicleModels: async (req, res) => {
+    try {
+      console.log(req.params);
+      const vehicleTypes = await VehicleModels.findAll({
+        where: {
+          vehicleTypeId: req.params.vehicleTypeId,
+        },
+      });
+      res
+        .status(200)
+        .json({ message: "Vehicle Type Fetched", data: vehicleTypes });
+    } catch (error) {
+      res.status(400).json({
+        message: "Some Error came between the execution",
+        error: error,
+      });
+    }
+  },
+  // for listing of all the vehicle Types for front-end User.
   getvehicleTypes: async (req, res) => {
     try {
       const vehicleTypes = await VehicleTypes.findAll();
@@ -32,13 +58,32 @@ const staticDataController = {
       });
     }
   },
-  fourWheelerList: async (req, res) => {
+
+  // booking return for the vehicle
+  returnBooking: async (req, res) => {
     try {
-      const fourWheelers = await FourWheeler.findAll();
-      console.log(JSON.stringify({ fourWheelers }, null, 2));
-      res
-        .status(200)
-        .json({ message: "All Four Wheelers", data: fourWheelers });
+      await Booking.update(
+        { returnStatus: 1 },
+        {
+          where: {
+            id: req.params.bookingId,
+          },
+        }
+      );
+      const booking = await Booking.findOne({
+        where: {
+          id: req.params.bookingId,
+        },
+      });
+      await Vehicles.update(
+        { availabilityStatus: 1 },
+        {
+          where: {
+            id: booking.vehicleId,
+          },
+        }
+      );
+      res.status(200).json({ message: "Vehicle Return Successfully" });
     } catch (error) {
       res.status(400).json({
         message: "Some Error came between the execution",

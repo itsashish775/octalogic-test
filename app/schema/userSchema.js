@@ -11,10 +11,7 @@ const schema = [
     .withMessage("Last Name is Required")
     .matches(/^[a-zA-Z]*$/)
     .withMessage("only alphabated Allowed"),
-  body("numberOfWheels")
-    .notEmpty()
-    .withMessage("Please Choose Number of Wheels"),
-  body("bookedVahicle").notEmpty().withMessage("Please Choose a Vehicle."),
+  body("vehicleId").notEmpty().withMessage("Please Choose a Vehicle Id."),
   body("startDate").isDate().withMessage("Date should be in YYYY-MM-DD"),
   body("endDate").isDate().withMessage("Date should be in YYYY-MM-DD"),
 ];

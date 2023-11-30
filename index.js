@@ -10,6 +10,7 @@ app.use(express.json());
 
 // API routes section
 const routes = require("./app/routes");
+
 app.use("/", routes);
 
 // Start the server and database connection server.
